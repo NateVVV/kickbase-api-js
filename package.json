@@ -1,0 +1,14 @@
+{
+  "name": "kickbase-api-js",
+  "version": "1.0.0",
+  "description": "Kickbase API using Javascript. Only for scientific purpose.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Kickbase"
+  ],
+  "author": "NateVVV",
+  "license": "ISC"
+}
