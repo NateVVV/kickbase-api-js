@@ -7,7 +7,7 @@ async function main() {
         credentials.email,
         credentials.password
     );
-    let { league } = await leagueInfo(token, leagues[0].id);
+    const { league } = await leagueInfo(token, leagues[0].id);
     console.log(league);
 }
 
