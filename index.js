@@ -3,10 +3,14 @@ import leagueInfo from "./lib/league_info.js";
 import credentials from "./credentials.js";
 
 async function main() {
-    let { token, leagues } = await login(
+    let { user, token, leagues } = await login(
         credentials.email,
         credentials.password
     );
+    if (user === undefined) throw new Error("could not login.");
+    console.log(token);
+    console.log(user);
+    console.log(leagues[0].id);
     const { league } = await leagueInfo(token, leagues[0].id);
     console.log(league);
 }
