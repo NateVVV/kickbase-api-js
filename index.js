@@ -1,5 +1,5 @@
-import login from "./lib/login.js";
-import myLeagueInfo from "./lib/my_league_info.js";
+import login from "./lib/api/login.js";
+import myLeagueInfo from "./lib/api/my_league_info.js";
 import credentials from "./credentials.js";
 
 async function main() {
