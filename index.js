@@ -10,8 +10,8 @@ async function main() {
     if (user === undefined) throw new Error("could not login.");
     console.log(token);
     console.log(user);
-    console.log(leagues[0].id);
-    const { league } = await leagueInfo(token, leagues[0].id);
+    console.log(leagues);
+    const league = await leagueInfo(token, leagues[0].id);
     console.log(league);
 }
 
