@@ -1,5 +1,5 @@
 import login from "./lib/login.js";
-import leagueInfo from "./lib/league_info.js";
+import myLeagueInfo from "./lib/my_league_info.js";
 import credentials from "./credentials.js";
 
 async function main() {
@@ -11,7 +11,7 @@ async function main() {
     console.log(token);
     console.log(user);
     console.log(leagues);
-    const league = await leagueInfo(token, leagues[0].id);
+    const league = await myLeagueInfo(token, leagues[0].id);
     console.log(league);
 }
 
