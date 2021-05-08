@@ -117,3 +117,6 @@ dist
 
 # Credentials (only used fro testing)
 credentials.js
+
+# Mac indexing files
+.DS_Store
