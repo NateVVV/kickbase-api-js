@@ -1,7 +1,7 @@
+import credentials from "./credentials.js";
 import login from "./lib/api/login.js";
 import myLeagueInfo from "./lib/api/my_league_info.js";
 import getLeagues from "./lib/api/leagues.js";
-import credentials from "./credentials.js";
 
 async function main() {
     let { user, token, leagues } = await login(
