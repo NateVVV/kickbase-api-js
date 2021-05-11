@@ -3,6 +3,7 @@ import login from "./lib/api/login.js";
 import myLeagueInfo from "./lib/api/my_league_info.js";
 import getLeagues from "./lib/api/leagues.js";
 import leagueUsers from "./lib/api/league_users.js";
+import userProfile from "./lib/api/user_profile.js";
 
 async function main() {
     let { user, token, leagues } = await login(
@@ -19,6 +20,9 @@ async function main() {
     console.log(leagues);
     let users = await leagueUsers(token, leagues[0].id);
     console.log(users);
+    let manager = await userProfile(token, leagues[0].id, user.id);
+    console.log(manager);
+    console.log(manager.seasons[0].matchDays);
 }
 
 main();
