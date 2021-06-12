@@ -20,7 +20,10 @@ async function main() {
     console.log(leagues);
     let users = await leagueUsers(token, leagues[0].id);
     console.log(users);
-    let manager = await userProfile(token, leagues[0].id, user.id);
+    let profile = await userProfile(token, leagues[0].id, user.id);
+    console.log(profile);
+    console.log(profile.seasons[0].matchDays);
+    let manager = new Manager(profile, leagues[0]);
     console.log(manager);
     console.log(manager.seasons[0].matchDays);
 }
