@@ -4,6 +4,7 @@ import myLeagueInfo from "./lib/api/my_league_info.js";
 import getLeagues from "./lib/api/leagues.js";
 import leagueUsers from "./lib/api/league_users.js";
 import userProfile from "./lib/api/user_profile.js";
+import { Manager } from "./lib/models/manager.js";
 
 async function main() {
     let { user, token, leagues } = await login(
