@@ -15,21 +15,22 @@ async function main() {
         credentials.password
     );
     if (user === undefined) throw new Error("could not login.");
-    const league = await myLeagueInfo(token, leagues[0].id);
-    console.log(league);
+    const leagueInfo = await myLeagueInfo(token, leagues[0].id);
+    console.log(leagueInfo);
     leagues = await getLeagues(token);
     console.log(leagues);
-    let users = await leagueUsers(token, leagues[0].id);
+    const league = leagues[0];
+    let users = await leagueUsers(token, league.id);
     console.log(users);
-    let profile = await userProfile(token, leagues[0].id, user.id);
+    let profile = await userProfile(token, league.id, user.id);
     console.log(profile);
     console.log(profile.seasons[0].matchDays);
-    let manager = new Manager(profile, leagues[0]);
+    let manager = new Manager(profile, league);
     console.log(manager);
     console.log("##################################");
-    await userFeed(token, leagues[0].id, user.id);
-    await leagueStats(token, leagues[0].id);
-    await userStats(token, leagues[0].id, user.id); //1707891
+    await userFeed(token, league.id, user.id);
+    await leagueStats(token, league.id);
+    await userStats(token, league.id, user.id); //1707891
 }
 
 main();
