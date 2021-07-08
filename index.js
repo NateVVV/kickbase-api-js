@@ -6,7 +6,7 @@ import getLeagues from "./lib/api/leagues.js";
 import leagueUsers from "./lib/api/league_users.js";
 import userProfile from "./lib/api/user_profile.js";
 import userFeed from "./lib/api/user_feed.js";
-import leagueStats from "./lib/api/league_stats.js";
+import getLeagueStats from "./lib/api/league_stats.js";
 import userStats from "./lib/api/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user_match_day_feed.js";
 import { Manager } from "./lib/models/manager.js";
@@ -33,7 +33,7 @@ async function main() {
     let manager = new Manager(profile, league);
     console.log(manager);
     await userFeed(token, league.id, user.id);
-    await leagueStats(token, league.id);
+    await getLeagueStats(token, league.id);
     await userStats(token, league.id, user.id); //1707891
     await getUserMatchDayFeed(token, league.id, user.id);
 }
