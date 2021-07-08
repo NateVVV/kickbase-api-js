@@ -1,6 +1,6 @@
 import credentials from "./credentials.js";
 import login from "./lib/api/login.js";
-import myLeagueInfo from "./lib/api/my_league_info.js";
+import getLeagueUserInfo from "./lib/api/league_user_info.js";
 import getLeagueInfo from "./lib/api/league_info.js";
 import getLeagues from "./lib/api/leagues.js";
 import leagueUsers from "./lib/api/league_users.js";
@@ -20,7 +20,7 @@ async function main() {
     for (const league of leagues) {
         console.log(league.name, league.id, league.totalTransfers);
     }
-    const myLeague = await myLeagueInfo(token, leagues[0].id);
+    const myLeague = await getLeagueUserInfo(token, leagues[0].id);
     const leagueInfo = await getLeagueInfo(token, leagues[2].id);
     leagues = await getLeagues(token);
     console.log(leagues);
