@@ -10,6 +10,7 @@ import getLeagueStats from "./lib/api/league_stats.js";
 import getUserStats from "./lib/api/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user_match_day_feed.js";
 import getMarket from "./lib/api/market.js";
+import getLeagueFeed from "./lib/api/league_feed.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -31,11 +32,12 @@ async function main() {
     //console.log(profile.seasons[0].matchDays);
     //let manager = new Manager(profile, league);
     //console.log(manager);
-    await getUserFeed(token, league.id, user.id);
-    await getLeagueStats(token, league.id);
-    await getUserStats(token, league.id, user.id); //1707891
-    await getUserMatchDayFeed(token, league.id, user.id);
-    await getMarket(token, league.id);
+    //await getUserFeed(token, league.id, user.id);
+    //await getLeagueStats(token, league.id);
+    //await getUserStats(token, league.id, user.id); //1707891
+    //await getUserMatchDayFeed(token, league.id, user.id);
+    //await getMarket(token, league.id);
+    await getLeagueFeed(token, league.id);
 }
 
 main();
