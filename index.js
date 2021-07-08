@@ -9,6 +9,7 @@ import userFeed from "./lib/api/user_feed.js";
 import getLeagueStats from "./lib/api/league_stats.js";
 import userStats from "./lib/api/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user_match_day_feed.js";
+import getMarket from "./lib/api/market.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -20,22 +21,21 @@ async function main() {
     for (const league of leagues) {
         console.log(league.name, league.id, league.totalTransfers);
     }
-    const myLeague = await getLeagueUserInfo(token, leagues[0].id);
-    const leagueInfo = await getLeagueInfo(token, leagues[2].id);
     leagues = await getLeagues(token);
     console.log(leagues);
-    const league = leagues[0];
+    const league = leagues[2];
     let users = await leagueUsers(token, league.id);
-    console.log(users);
+    //console.log(users);
     let profile = await userProfile(token, league.id, user.id);
-    console.log(profile);
-    console.log(profile.seasons[0].matchDays);
-    let manager = new Manager(profile, league);
-    console.log(manager);
+    //console.log(profile);
+    //console.log(profile.seasons[0].matchDays);
+    //let manager = new Manager(profile, league);
+    //console.log(manager);
     await userFeed(token, league.id, user.id);
     await getLeagueStats(token, league.id);
     await userStats(token, league.id, user.id); //1707891
     await getUserMatchDayFeed(token, league.id, user.id);
+    await getMarket(token, league.id);
 }
 
 main();
