@@ -11,6 +11,7 @@ import getUserStats from "./lib/api/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user_match_day_feed.js";
 import getMarket from "./lib/api/market.js";
 import getLeagueFeed from "./lib/api/league_feed.js";
+import getUserPlayers from "./lib/api/user_players.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -37,7 +38,8 @@ async function main() {
     //await getUserStats(token, league.id, user.id); //1707891
     //await getUserMatchDayFeed(token, league.id, user.id);
     //await getMarket(token, league.id);
-    await getLeagueFeed(token, league.id);
+    //await getLeagueFeed(token, league.id);
+    await getUserPlayers(token, league.id, user.id);
 }
 
 main();
