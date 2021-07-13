@@ -12,6 +12,7 @@ import getUserMatchDayFeed from "./lib/api/user_match_day_feed.js";
 import getMarket from "./lib/api/market.js";
 import getLeagueFeed from "./lib/api/league_feed.js";
 import getUserPlayers from "./lib/api/user_players.js";
+import getLeagueQuickstats from "./lib/api/league_quickstats.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -39,7 +40,8 @@ async function main() {
     //await getUserMatchDayFeed(token, league.id, user.id);
     //await getMarket(token, league.id);
     //await getLeagueFeed(token, league.id);
-    await getUserPlayers(token, league.id, user.id);
+    //await getUserPlayers(token, league.id, user.id);
+    await getLeagueQuickstats(token, league.id);
 }
 
 main();
