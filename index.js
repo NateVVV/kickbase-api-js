@@ -11,6 +11,7 @@ import getUserStats from "./lib/api/user/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user/user_match_day_feed.js";
 import getMarket from "./lib/api/league/market/market.js";
 import getLeagueFeed from "./lib/api/league/feed/league_feed.js";
+import getFeedComments from "./lib/api/league/feed/feed_comments.js";
 import getUserPlayers from "./lib/api/user/user_players.js";
 import getLeagueQuickstats from "./lib/api/league/league_quickstats.js";
 import { Manager } from "./lib/models/manager.js";
@@ -40,7 +41,31 @@ async function main() {
     //await getUserStats(token, league.id, user.id); //1707891
     //await getUserMatchDayFeed(token, league.id, user.id);
     //await getMarket(token, league.id);
-    //await getLeagueFeed(token, league.id);
+    let feed = await getLeagueFeed(token, league.id);
+    for (const item of feed.items) {
+        if (item.comments > 0) {
+            let feedComments = await getFeedComments(token, league.id, item.id);
+            console.log(item.id, feedComments);
+        }
+    }
+    let start = feed.items.length;
+    while (feed.items.length > 0) {
+        feed = await getLeagueFeed(token, league.id, start);
+        for (const item of feed.items) {
+            if (item.comments > 0) {
+                let feedComments = await getFeedComments(
+                    token,
+                    league.id,
+                    item.id
+                );
+                console.log(item.id);
+                for (const comment of feedComments.comments) {
+                    console.log(comment.comment);
+                }
+            }
+        }
+        start += feed.items.length;
+    }
     //await getUserPlayers(token, league.id, user.id);
     await getLeagueQuickstats(token, league.id);
 }
