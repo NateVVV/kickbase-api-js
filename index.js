@@ -9,7 +9,7 @@ import getUserFeed from "./lib/api/user/user_feed.js";
 import getLeagueStats from "./lib/api/league/league_stats.js";
 import getUserStats from "./lib/api/user/user_stats.js";
 import getUserMatchDayFeed from "./lib/api/user/user_match_day_feed.js";
-import getMarket from "./lib/api/league/market.js";
+import getMarket from "./lib/api/league/market/market.js";
 import getLeagueFeed from "./lib/api/league/league_feed.js";
 import getUserPlayers from "./lib/api/user/user_players.js";
 import getLeagueQuickstats from "./lib/api/league/league_quickstats.js";
