@@ -1,6 +1,6 @@
 import credentials from "./credentials.js";
 import login from "./lib/api/login.js";
-import getLeagueUserInfo from "./lib/api/league/league_user_info.js";
+import getLeaguePersonelInfo from "./lib/api/league/league_personel_info.js";
 import getLeagueInfo from "./lib/api/league/league_info.js";
 import getLeagues from "./lib/api/league/leagues.js";
 import getLeagueUsers from "./lib/api/league/league_users.js";
@@ -29,6 +29,7 @@ async function main() {
     const league = leagues[2];
     let users = await getLeagueUsers(token, league.id);
     console.log(users);
+    console.log(await getLeaguePersonelInfo(token, league.id));
     let profile = await getUserProfile(token, league.id, user.id);
     //console.log(profile);
     //console.log(profile.seasons[0].matchDays);
