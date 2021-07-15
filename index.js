@@ -14,6 +14,7 @@ import getLeagueFeed from "./lib/api/league/feed/league_feed.js";
 import getFeedComments from "./lib/api/league/feed/feed_comments.js";
 import getUserPlayers from "./lib/api/league/user/user_players.js";
 import getLeagueQuickstats from "./lib/api/league/league_quickstats.js";
+import getPlayerInfo from "./lib/api/player/info.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -62,12 +63,14 @@ async function main() {
                 for (const comment of feedComments.comments) {
                     console.log(comment.comment);
                 }
+                console.log(item.meta);
+                console.log(await getPlayerInfo(token, league.id, item.meta.playerId));
             }
         }
         start += feed.items.length;
     }
     //await getUserPlayers(token, league.id, user.id);
-    await getLeagueQuickstats(token, league.id);
+    //await getLeagueQuickstats(token, league.id);
 }
 
 main();
