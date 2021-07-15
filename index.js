@@ -17,6 +17,7 @@ import getLeagueQuickstats from "./lib/api/league/league_quickstats.js";
 import getPlayerInfo from "./lib/api/player/info.js";
 import getPlayerFeed from "./lib/api/player/feed.js";
 import getPlayerPoints from "./lib/api/player/points.js";
+import getPlayerStats from "./lib/api/player/stats.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -78,8 +79,16 @@ async function main() {
                 let playerPoints = await getPlayerPoints(token, playerId);
                 //console.log(playerPoints);
                 console.log(playerName);
-                if(playerPoints.seasons.length > 0)
-                    console.table(playerPoints.seasons[playerPoints.seasons.length - 1].m)
+                if (false && playerPoints.seasons.length > 0)
+                    console.table(
+                        playerPoints.seasons[playerPoints.seasons.length - 1].m
+                    );
+                const playerStats = await getPlayerStats(
+                    token,
+                    league.id,
+                    playerId
+                );
+                console.log(playerStats);
             }
         }
         start += feed.items.length;
