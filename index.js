@@ -16,6 +16,7 @@ import getUserPlayers from "./lib/api/league/user/user_players.js";
 import getLeagueQuickstats from "./lib/api/league/league_quickstats.js";
 import getPlayerInfo from "./lib/api/player/info.js";
 import getPlayerFeed from "./lib/api/player/feed.js";
+import getPlayerPoints from "./lib/api/player/points.js";
 import { Manager } from "./lib/models/manager.js";
 
 async function main() {
@@ -64,16 +65,21 @@ async function main() {
                 for (const comment of feedComments.comments) {
                     console.log(comment.comment);
                 }
-                console.log(item.meta);
-                console.log(
-                    await getPlayerInfo(token, league.id, item.meta.playerId)
-                );
+                //console.log(item.meta);
+                const playerId = item.meta.playerId;
+                const playerName = `${item.meta.playerFirstName} ${item.meta.playerLastName}`;
+                //console.log(await getPlayerInfo(token, league.id, playerId));
                 let playerFeed = await getPlayerFeed(
                     token,
                     league.id,
-                    item.meta.playerId
+                    playerId
                 );
-                console.log(playerFeed);
+                //console.log(playerFeed);
+                let playerPoints = await getPlayerPoints(token, playerId);
+                //console.log(playerPoints);
+                console.log(playerName);
+                if(playerPoints.seasons.length > 0)
+                    console.table(playerPoints.seasons[playerPoints.seasons.length - 1].m)
             }
         }
         start += feed.items.length;
