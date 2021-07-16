@@ -19,6 +19,38 @@ import getPlayerFeed from "./lib/api/player/feed.js";
 import getPlayerPoints from "./lib/api/player/points.js";
 import getPlayerStats from "./lib/api/player/stats.js";
 import { Manager } from "./lib/models/manager.js";
+import { TeamRoster } from "./lib/models/team_roster.js";
+
+async function getCompleteLeagueFeed(accessToken, leagueId) {
+    const itemsPerPage = 30;
+    let feed = await getLeagueFeed(accessToken, leagueId);
+    if (feed.items.length == 0) return null;
+
+    // collect all the pages
+    let feedPages = [feed];
+    let start = feed.items.length;
+    while (feed.items.length == itemsPerPage) {
+        feed = await getLeagueFeed(accessToken, leagueId, start);
+        start += feed.items.length;
+        feedPages.push(feed);
+    }
+    if (feedPages.length == 1) return feedPages[0];
+    let baseFeed = feedPages[0];
+
+    // summarize all in one single feed
+    for (let i = 1; i < feedPages.length; i++) {
+        baseFeed.items.push(...feedPages[i].items);
+    }
+    // sort
+    baseFeed.items.sort((first, second) => second.age - first.age);
+    return baseFeed;
+}
+
+async function getCompleteTransfers(accessToken, leagueId) {
+    let completeFeed = await getCompleteLeagueFeed(accessToken, leagueId);
+    completeFeed.items.filter((i) => i.type == 12 || i.type == 2);
+    return completeFeed;
+}
 
 async function main() {
     let { user, token, leagues } = await login(
@@ -45,53 +77,35 @@ async function main() {
     //await getUserStats(token, league.id, user.id); //1707891
     //await getUserMatchDayFeed(token, league.id, user.id);
     //await getMarket(token, league.id);
-    let feed = await getLeagueFeed(token, league.id);
+    let feed = await getCompleteTransfers(token, league.id);
     for (const item of feed.items) {
-        if (item.comments > 0) {
+        const playerId = item.meta.playerId;
+        const playerName = `${item.meta.playerFirstName} ${item.meta.playerLastName}`;
+        if (item.type == 12) {
+            console.log("bought", item.id, item.date, playerName);
+        } else if (item.type == 2) {
+            console.log("selled", item.id, item.date, playerName);
+        }
+        if (false && item.comments > 0) {
             let feedComments = await getFeedComments(token, league.id, item.id);
-            console.log(item.id, feedComments);
+            console.table(feedComments.comments);
+            //console.log(item.meta);
+            //console.log(await getPlayerInfo(token, league.id, playerId));
+            let playerFeed = await getPlayerFeed(token, league.id, playerId);
+            //console.log(playerFeed);
+            let playerPoints = await getPlayerPoints(token, playerId);
+            //console.log(playerPoints);
+            if (false && playerPoints.seasons.length > 0)
+                console.table(
+                    playerPoints.seasons[playerPoints.seasons.length - 1].m
+                );
+            const playerStats = await getPlayerStats(
+                token,
+                league.id,
+                playerId
+            );
+            //console.log(playerStats);
         }
-    }
-    let start = feed.items.length;
-    while (feed.items.length > 0) {
-        feed = await getLeagueFeed(token, league.id, start);
-        for (const item of feed.items) {
-            if (item.comments > 0) {
-                let feedComments = await getFeedComments(
-                    token,
-                    league.id,
-                    item.id
-                );
-                console.log(item.id);
-                for (const comment of feedComments.comments) {
-                    console.log(comment.comment);
-                }
-                //console.log(item.meta);
-                const playerId = item.meta.playerId;
-                const playerName = `${item.meta.playerFirstName} ${item.meta.playerLastName}`;
-                //console.log(await getPlayerInfo(token, league.id, playerId));
-                let playerFeed = await getPlayerFeed(
-                    token,
-                    league.id,
-                    playerId
-                );
-                //console.log(playerFeed);
-                let playerPoints = await getPlayerPoints(token, playerId);
-                //console.log(playerPoints);
-                console.log(playerName);
-                if (false && playerPoints.seasons.length > 0)
-                    console.table(
-                        playerPoints.seasons[playerPoints.seasons.length - 1].m
-                    );
-                const playerStats = await getPlayerStats(
-                    token,
-                    league.id,
-                    playerId
-                );
-                console.log(playerStats);
-            }
-        }
-        start += feed.items.length;
     }
     //await getUserPlayers(token, league.id, user.id);
     //await getLeagueQuickstats(token, league.id);
