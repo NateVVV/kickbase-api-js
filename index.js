@@ -47,9 +47,9 @@ async function getCompleteLeagueFeed(accessToken, leagueId) {
 }
 
 async function getCompleteTransfers(accessToken, leagueId) {
-    let completeFeed = await getCompleteLeagueFeed(accessToken, leagueId);
-    completeFeed.items.filter((i) => i.type == 12 || i.type == 2);
-    return completeFeed;
+    let feed = await getCompleteLeagueFeed(accessToken, leagueId);
+    feed.items.filter((i) => i.type == 12 || i.type == 2);
+    return feed;
 }
 
 async function main() {
