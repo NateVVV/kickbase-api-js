@@ -74,36 +74,36 @@ async function main() {
     let profile = await getUserProfile(token, league.id, user.id);
     //let manager = new Manager(profile, league);
     //console.log(manager);
-    let feed = await getCompleteTransfers(token, league.id);
-    for (const item of feed.items) {
-        const playerId = item.meta.playerId;
-        const playerName = `${item.meta.playerFirstName} ${item.meta.playerLastName}`;
-        if (item.type == 12) {
-            console.log("bought", item.id, item.date, playerName);
-        } else if (item.type == 2) {
-            console.log("selled", item.id, item.date, playerName);
-        }
-        if (false && item.comments > 0) {
-            let feedComments = await getFeedComments(token, league.id, item.id);
-            console.table(feedComments.comments);
-            //console.log(item.meta);
-            //console.log(await getPlayerInfo(token, league.id, playerId));
-            let playerFeed = await getPlayerFeed(token, league.id, playerId);
-            //console.log(playerFeed);
-            let playerPoints = await getPlayerPoints(token, playerId);
-            //console.log(playerPoints);
-            if (false && playerPoints.seasons.length > 0)
-                console.table(
-                    playerPoints.seasons[playerPoints.seasons.length - 1].m
-                );
-            const playerStats = await getPlayerStats(
-                token,
-                league.id,
-                playerId
+    let transfers = await getCompleteTransfers(token, league.id);
+    let transferExchange = 0;
+    for (const transfer of transfers) {
+        const playerName = `${transfer.meta.playerFirstName} ${transfer.meta.playerLastName}`;
+        let transferType = ((type) => {
+            if (type == 12) return "bought";
+            if (type == 2) return "selled";
+        })(transfer.type);
+            console.log(
+                transferType,
+                transfer.id,
+                transfer.date,
+                playerName,
+                transfer.meta.price
             );
-            //console.log(playerStats);
+        if (false && transfer.comments > 0) {
+            await showComments(token, league.id, transfer.id);
+        }
+
+        if (
+            transfer.meta.buyerId == user.id ||
+            transfer.meta.sellerId == user.id
+        ) {
+            console.log("This was me");
+            // this currently works just with transfers with public transfer market, not with p2p
+            if (transfer.type == 12) transferExchange -= transfer.meta.price;
+            if (transfer.type == 2) transferExchange += transfer.meta.price;
         }
     }
+    console.log("Transfer win:", transferExchange); // this seems to be courrently wrong
     //await getUserPlayers(token, league.id, user.id);
     //await getLeagueQuickstats(token, league.id);
 }
