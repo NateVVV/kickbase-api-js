@@ -82,13 +82,13 @@ async function main() {
             if (type == 12) return "bought";
             if (type == 2) return "selled";
         })(transfer.type);
-            console.log(
-                transferType,
-                transfer.id,
-                transfer.date,
-                playerName,
-                transfer.meta.price
-            );
+        console.log(
+            transferType,
+            transfer.id,
+            transfer.date,
+            playerName,
+            transfer.meta.price
+        );
         if (false && transfer.comments > 0) {
             await showComments(token, league.id, transfer.id);
         }
