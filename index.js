@@ -68,15 +68,8 @@ async function main() {
     console.log(users);
     console.log(await getLeaguePersonelInfo(token, league.id));
     let profile = await getUserProfile(token, league.id, user.id);
-    //console.log(profile);
-    //console.log(profile.seasons[0].matchDays);
     //let manager = new Manager(profile, league);
     //console.log(manager);
-    //await getUserFeed(token, league.id, user.id);
-    //await getLeagueStats(token, league.id);
-    //await getUserStats(token, league.id, user.id); //1707891
-    //await getUserMatchDayFeed(token, league.id, user.id);
-    //await getMarket(token, league.id);
     let feed = await getCompleteTransfers(token, league.id);
     for (const item of feed.items) {
         const playerId = item.meta.playerId;
