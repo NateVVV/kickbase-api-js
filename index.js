@@ -78,7 +78,7 @@ async function main() {
     let transferExchange = 0;
     for (const transfer of transfers) {
         const playerName = `${transfer.meta.playerFirstName} ${transfer.meta.playerLastName}`;
-        let transferType = ((type) => {
+        const transferType = ((type) => {
             if (type == 12) return "bought";
             if (type == 2) return "selled";
         })(transfer.type);
