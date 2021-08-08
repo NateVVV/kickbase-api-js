@@ -48,8 +48,12 @@ async function getCompleteLeagueFeed(accessToken, leagueId) {
 
 async function getCompleteTransfers(accessToken, leagueId) {
     let feed = await getCompleteLeagueFeed(accessToken, leagueId);
-    feed.items.filter((i) => i.type == 12 || i.type == 2);
-    return feed;
+    return feed.items.filter((i) => i.type == 12 || i.type == 2);
+}
+
+async function showComments(token, leagueId, feedId) {
+    let feedComments = await getFeedComments(token, leagueId, feedId);
+    console.table(feedComments.comments);
 }
 
 async function main() {
